@@ -32,16 +32,17 @@ const ProgressModal = ({props}) => {
     
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-400">        
-            <div className='bg-white p-4 rounded shadow-md'>
+    <div className="fixed inset-0 flex items-center justify-center bg-black/50">        
+            <div className='bg-white p-4 rounded shadow-md max-w-md'>
+                
                 <h2 className='text-xl font-semibold mb-4 text-center'>Progreso de lectura</h2>
                 
-                <div className='flex items-center flex-col space-y-2 ustify-between mb-4'>
+                <div className='flex items-center flex-col space-y-2  mb-4'>
                     
                     
-                    <div className="flex"> 
+                    <div className="flex  items-center justify-end"> 
                         <button 
-                            className='rounded-full w-12 h-12 text-white  flex justify-center items-center bg-brand-500 hover:bg-turquoise-600'
+                            className='rounded-full w-15 aspect-square text-white  flex justify-center items-center bg-brand-500 hover:bg-turquoise-600'
                             onClick={decrementCurrentPage}
                             >
                             <FaMinus className=""/>
@@ -73,6 +74,7 @@ const ProgressModal = ({props}) => {
                         max={data.totPage} 
                         value={currentPageState}
                         onChange={(e) => setcurrentPageState(e.target.value)}
+                        className="w-full"
                         />
                         
 
