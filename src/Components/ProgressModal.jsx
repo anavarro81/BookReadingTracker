@@ -11,18 +11,20 @@ const ProgressModal = ({props}) => {
         totPage: 216
     }
 
-    const [currentPage, setCurrentPage] = useState(data.currentPage)
+
+
+    const [currentPageState, setcurrentPageState] = useState(data.currentPage)
 
     const incrementCurrentPage = () => {
-        if (currentPage < data.totPage) {
-            setCurrentPage(currentPage + 1)        
+        if (currentPageState < data.totPage) {
+            setcurrentPageState(currentPageState + 1)        
         }
     }
 
     const decrementCurrentPage = () => {
         
-        if (currentPage > 0 && currentPage > data.currentPage ) {
-            setCurrentPage(currentPage - 1)        
+        if (currentPageState > 0 && currentPageState > data.currentPage ) {
+            setcurrentPageState(currentPageState - 1)        
         }
 
     }
@@ -50,7 +52,7 @@ const ProgressModal = ({props}) => {
                                 id='currentPage' 
                                 type="number" 
                                 placeholder="199" 
-                                value={currentPage}
+                                value={currentPageState}
                                 className="w-1/2 text-center font-bold text-6xl"/> 
                             <span id='totalPages' className="text-gray-600"> de {data.totPage} paginas </span>
                         </div>
@@ -69,8 +71,8 @@ const ProgressModal = ({props}) => {
                         name="totPages" 
                         min="0"
                         max={data.totPage} 
-                        value={currentPage}
-                        onChange={(e) => setCurrentPage(e.target.value)}
+                        value={currentPageState}
+                        onChange={(e) => setcurrentPageState(e.target.value)}
                         />
                         
 
@@ -82,8 +84,17 @@ const ProgressModal = ({props}) => {
 
                 <div className="flex justify-center gap-2">
 
-                    <button className="rounded-xl text-white bg-brand-500 px-4 py-2"> Cancelar </button>
-                    <button className="rounded-xl text-white bg-brand-500 px-4 py-2"> Salvar </button>
+                    <button 
+                        className="rounded-xl text-white bg-brand-500 px-4 py-2"> 
+                        Cancelar 
+                    </button>
+                    <button 
+                        className="rounded-xl text-white bg-brand-500 px-4 py-2 disabled:bg-gray-400"
+                        id="saveButton"
+                        disabled={data.currentPage === currentPageState}
+                        >
+                         Salvar 
+                    </button>
                     
                 </div>
             </div>
