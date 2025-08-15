@@ -1,10 +1,12 @@
-import React from 'react'
-
+import BookReadingDashboard from './Pages/BookReadingDashboard.jsx';
+import ProgressModal from './Components/ProgressModal.jsx';
 const App = () => {
   return (
-    <h1 className="text-3xl font-bold underline"> React + Vite + Tailwind CSS </h1>
-
-  )
+    <ProgressModal />
+  );
 }
+
+  
+
 
 export default App
