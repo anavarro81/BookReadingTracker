@@ -33,11 +33,11 @@ const ProgressModal = ({props}) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50">        
-            <div className='bg-white p-4 rounded shadow-md max-w-md'>
+            <div className='bg-white p-4 rounded shadow-md max-w-md '>
                 
                 <h2 className='text-xl font-semibold mb-4 text-center'>Progreso de lectura</h2>
                 
-                <div className='flex items-center flex-col space-y-2  mb-4'>
+                <div className='flex items-center flex-col space-y-4  mb-4'>
                     
                     
                     <div className="flex  items-center justify-end"> 
@@ -59,7 +59,7 @@ const ProgressModal = ({props}) => {
                         </div>
 
                         <button 
-                            className='rounded-full w-12 h-12 text-white  flex justify-center items-center bg-brand-500 hover:bg-turquoise-600'
+                            className='rounded-full w-15 aspect-square text-white  flex justify-center items-center bg-brand-500 hover:bg-turquoise-600'
                             onClick={incrementCurrentPage} >                            
                             <FaPlus />
                         </button>
@@ -78,20 +78,20 @@ const ProgressModal = ({props}) => {
                         />
                         
 
-                    <button className='p-1 rounded-full text-white bg-brand-500 hover:bg-turquoise-600 flex items-center gap-1'>
-                        <FaRegClock /> Añadir fecha
+                    <button className='px-2 rounded-full w-1/2 h-12 text-white  bg-brand-500 hover:bg-turquoise-600 flex items-center justify-center gap-2'>
+                        <FaRegCalendarAlt /> Añadir fecha
                     </button>
 
                 </div>
 
                 <div className="flex justify-center gap-2">
-
-                    <button 
-                        className="rounded-xl text-white bg-brand-500 px-4 py-2"> 
+                    <button                         
+                        className="w-full h-12 bg-brand-200 rounded-full text-brand-500 font-medium"
+                        > 
                         Cancelar 
                     </button>
-                    <button 
-                        className="rounded-xl text-white bg-brand-500 px-4 py-2 disabled:bg-gray-400"
+                    <button                         
+                        className="w-full h-12 bg-brand-500 rounded-full font-medium text-white"
                         id="saveButton"
                         disabled={data.currentPage === currentPageState}
                         >
