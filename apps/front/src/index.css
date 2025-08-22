@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+
+@layer utilities {
+  /* Base del range: quitamos el estilo nativo */
+  input[type="range"] {
+    @apply appearance-none w-full bg-transparent;
+  }
+
+  /* PISTA (barra gris) - Chrome / Edge / Safari */
+  input[type="range"]::-webkit-slider-runnable-track {
+    @apply h-2 bg-gray-200 rounded-full;
+  }
+
+  /* PISTA (barra gris) - Firefox */
+  input[type="range"]::-moz-range-track {
+    @apply h-2 bg-gray-200 rounded-full;
+  }
+
+  /* THUMB (ya lo tenías, lo dejo aquí por claridad) */
+  input[type="range"]::-webkit-slider-thumb {
+    @apply appearance-none w-[28px] h-[28px] rounded-full bg-brand-500 border-[4px] border-white shadow-[0_1px_3px_rgba(0,0,0,0.2)];
+    margin-top: -13px; /* centra el thumb verticalmente sobre una pista de 8px-12px (ajusta si hace falta) */
+  }
+  
+  input[type="range"]::-moz-range-thumb {
+    @apply appearance-none w-[28px] h-[28px] rounded-full bg-brand-500 border-[4px] border-white shadow-[0_1px_3px_rgba(0,0,0,0.2)];
+  }
+
+  /* input[type="date"]::-webkit-calendar-picker-indicator {
+    @apply hidden ;
+  } */
+
+
+}
+
+@theme {
+  --color-brand-100: #DFF6FA;
+  --color-brand-200: #B8ECF5;
+  --color-brand-500: #22C1D6; /* principal */
+  --color-brand-600: #1BA9BD; /* hover */
+  --color-brand-700: #14879A;
+}

@@ -1,0 +1,16 @@
+{
+  "name": "bookreadingtracker",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n back,front -c blue,green \"npm run dev --workspace back\" \"npm run dev --workspace front\"",
+    "dev:back": "npm run dev --workspace back",
+    "dev:front": "npm run dev --workspace front",
+    "build": "npm run build --workspace back && npm run build --workspace front"
+  },
+  "dependencies": {
+    "concurrently": "^9.2.0"
+  }
+}
