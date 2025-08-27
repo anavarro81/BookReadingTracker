@@ -4,8 +4,8 @@ import BookingReadingTable from './Pages/BookingReadingTable.jsx';
 const App = () => {
   return (
     <div>
-      <BookingReadingTable />
       
+      <ProgressModal/>
     </div>
   );
 }

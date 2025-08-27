@@ -1,5 +1,5 @@
 import { FaMinus, FaPlus, FaRegCalendarAlt, FaTimes } from "react-icons/fa";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
@@ -21,7 +21,15 @@ const ProgressModal = ({props}) => {
 
     const [showDatePicker, setShowDatePicker] = useState(true)
 
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(new Date())    
+
+    const handleCloseDate = () => {
+        
+        setShowDatePicker(true)
+        setSelectedDate(null)
+    }
+    
+
 
     const incrementCurrentPage = () => {
         if (currentPageState < data.totPage) {
@@ -97,6 +105,7 @@ const ProgressModal = ({props}) => {
                         locale="es"
                         selected={selectedDate}
                         onChange={(date) => setSelectedDate(date)}
+                        dateFormat="dd/MM/yyyy"
                     />        
                         
                       
@@ -110,7 +119,7 @@ const ProgressModal = ({props}) => {
                         : 
                         
                          <button className='px-2 rounded-full  h-12 text-white  bg-brand-500 hover:bg-turquoise-600 flex items-center justify-center gap-2'
-                         onClick={() => setShowDatePicker(true)}
+                         onClick={handleCloseDate}
                          >
                             <FaRegCalendarAlt /> Añadir fecha
                         </button>
