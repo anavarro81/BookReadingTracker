@@ -4,24 +4,32 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
 
-const ProgressModal = ({props}) => {
+const ProgressModal = ({open, modalStatus, onClose}) => {
 
-    // const { totalPages, currentPage, onPageChange, onDateChange } = props;
+   
+    registerLocale("es", es);    
 
-    registerLocale("es", es);
+    const [currentPage, setCurrenPage] = useState(modalStatus?.currentPage ?? 0)
+    const [totalPages, setTotalPages ] = useState(modalStatus?.totalPages ?? 0)
 
-    const data = {
-        currentPage: 198,
-        totPage: 216
-    }
 
-    const currentDate = new Date();
-
-    const [currentPageState, setcurrentPageState] = useState(data.currentPage)
+    const [currentPageState, setcurrentPageState] = useState(currentPage)
 
     const [showDatePicker, setShowDatePicker] = useState(true)
 
-    const [selectedDate, setSelectedDate] = useState(new Date())    
+    const [selectedDate, setSelectedDate] = useState(new Date())
+    
+    // sincronizar cuando cambien props
+    useEffect(() => {
+      setCurrenPage(modalStatus.currentPage ?? currentPage)
+      setTotalPages(modalStatus.totalPages ?? totalPages)    
+    }, [modalStatus])
+    
+    
+    const handleCloseModal = () => {
+        
+        onClose()
+    }
 
     const handleCloseDate = () => {
         
@@ -31,21 +39,32 @@ const ProgressModal = ({props}) => {
     
 
 
+
     const incrementCurrentPage = () => {
-        if (currentPageState < data.totPage) {
+        if (currentPageState < totalPages) {
             setcurrentPageState(currentPageState + 1)        
         }
     }
 
     const decrementCurrentPage = () => {
         
-        if (currentPageState > 0 && currentPageState > data.currentPage ) {
+        if (currentPageState > 0 && currentPageState > currentPage ) {
             setcurrentPageState(currentPageState - 1)        
         }
 
     }
 
-    
+    const handleChangeProgressStatus = (e) => {
+        console.log('Progreso: ', e.target.value)
+
+         if (e.target.value > currentPage) {
+          setcurrentPageState(e.target.value)  
+         } 
+        
+
+    }
+
+    if (!open) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50">        
@@ -71,7 +90,7 @@ const ProgressModal = ({props}) => {
                                 placeholder="199" 
                                 value={currentPageState}
                                 className="w-1/2 text-center font-bold text-6xl"/> 
-                            <span id='totalPages' className="text-gray-600"> de {data.totPage} paginas </span>
+                            <span id='totalPages' className="text-gray-600"> de {totalPages} paginas </span>
                         </div>
 
                         <button 
@@ -87,9 +106,9 @@ const ProgressModal = ({props}) => {
                         id="currentPageSlider" 
                         name="totPages" 
                         min="0"
-                        max={data.totPage} 
+                        max={totalPages} 
                         value={currentPageState}
-                        onChange={(e) => setcurrentPageState(e.target.value)}
+                        onChange={handleChangeProgressStatus}
                         className="w-full"
                         />
                         
@@ -133,13 +152,14 @@ const ProgressModal = ({props}) => {
                 <div className="flex justify-center gap-2">
                     <button                         
                         className="w-full h-12 bg-brand-200 rounded-full text-brand-500 font-medium"
+                        onClick={handleCloseModal}
                         > 
                         Cancelar 
                     </button>
                     <button                         
                         className="w-full h-12 bg-brand-500 rounded-full font-medium text-white"
                         id="saveButton"
-                        disabled={data.currentPage === currentPageState}
+                        disabled={currentPage === currentPageState}
                         >
                          Salvar 
                     </button>
