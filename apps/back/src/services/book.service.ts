@@ -30,10 +30,6 @@ export const updateProgress = async (id: string, totalPages: number, currentPage
     
         let data: Partial<IBook> = { currentPage };
 
-        console.log('totalPages: ', totalPages)
-        console.log('currentPage: ', currentPage)
-        console.log('tipo de totalPage ', typeof totalPages) 
-        console.log('tipo de currentPage ', typeof currentPage) 
 
 
         if (currentPage == totalPages) {
@@ -47,7 +43,17 @@ export const updateProgress = async (id: string, totalPages: number, currentPage
 
 }
 
-// export const updateBook = async(data: Partial<IBook>): Promise<IBook> => {
+export const updateBook = async(id: string, data: Partial<IBook>): Promise<IBook | null> => {
 
-// }
+    try {
+         console.log('id ==> ', id)
+         console.log('data ==> ', data)
+        const updatedBook = await BookModel.findByIdAndUpdate(id, data, { new: true })        
+        console.log('updatedBook  ', updatedBook )
+        return updatedBook 
+    } catch (error) {
+        throw error
+    }
+
+}
 
