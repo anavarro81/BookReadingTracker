@@ -1,8 +1,16 @@
 import {Response, Request, NextFunction} from "express"
+import {validateNweBook} from '../utils/validators'
+
 import * as bookService from '../services/book.service'
 
 export const newBook = async (req: Request, res: Response, next:NextFunction):Promise<void> => {
 
+    const result = validateNweBook(req.body)    
+
+    if (!result.valid) {
+        res.status(403).json({error: result.errors})
+    }
+    
     try {
         
         const book = await bookService.newBook(req.body)
