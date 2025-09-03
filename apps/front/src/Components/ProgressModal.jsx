@@ -156,13 +156,13 @@ const ProgressModal = ({open, modalStatus, onClose}) => {
                         > 
                         Cancelar 
                     </button>
-                    <button                         
-                        className="w-full h-12 bg-brand-500 rounded-full font-medium text-white"
-                        id="saveButton"
-                        disabled={currentPage === currentPageState}
-                        >
-                         Salvar 
-                    </button>
+                        <button                         
+                            className={`w-full h-12 rounded-full font-medium text-white bg-brand-500 ${currentPage === currentPageState ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            id="saveButton"
+                            disabled={currentPage === currentPageState}
+                            >
+                             Salvar 
+                        </button>
                     
                 </div>
             </div>
