@@ -4,7 +4,8 @@ import {
     newBook,
     deleteBook,
     updateProgress,
-    updatebook
+    updatebook,
+    getAllBooks
  } from '../controllers/book.controller'
 
 
@@ -14,6 +15,7 @@ import {
  bookRouter.delete('/:id', deleteBook)
  bookRouter.put('update-progress/:id', updateProgress)
  bookRouter.put('/:id', updatebook)
+ bookRouter.get('/', getAllBooks)
 
 
  export default bookRouter

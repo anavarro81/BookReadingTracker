@@ -84,3 +84,13 @@ export  const updatebook = async (req: Request, res: Response,  next:NextFunctio
 
 }
 
+export const getAllBooks = async (req: Request, res: Response,  next:NextFunction):Promise<void> => {
+
+    try {
+        const books = await bookService.getAllBooks()
+        res.status(200).json({books})        
+    } catch (error) {
+        next(error)
+    }
+
+}

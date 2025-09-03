@@ -57,3 +57,16 @@ export const updateBook = async(id: string, data: Partial<IBook>): Promise<IBook
 
 }
 
+export const getAllBooks = async (): Promise<IBook []> => {
+    
+    try {
+
+        const books = await BookModel.find()
+        return books
+        
+    } catch (error) {
+        throw error
+        
+    }
+}
+

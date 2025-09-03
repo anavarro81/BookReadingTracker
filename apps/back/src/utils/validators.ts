@@ -66,6 +66,7 @@ const bookSchema = Joi.object({
         ,
     endReading:
         Joi.date()
+        .allow(null)
         .messages({
             'date.base': 'La fecha de fin de lectura no es válida'
         })
