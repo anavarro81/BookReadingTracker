@@ -2,48 +2,50 @@ import React, { useState, useEffect } from "react";
 import { FiBook, FiSearch, FiFilter, FiX, FiPlus, FiRefreshCw, FiEdit, FiTrash2 } from "react-icons/fi";
 import { format } from "date-fns";
 import ProgressModal from "../Components/ProgressModal";
-
+import {axiosInstance} from '../util/axios'
 const BookingReadingTable = () => {
 
   
 
-  const [books, setBooks] = useState ([
-    {
-      id: 1, 
-      title: "StarDust",
-      format: "Hardcover",
-      status: "completed",
-      currentPage: 216,
-      totalPages: 216,
-      progress: 100,
-      lastUpdate: new Date(2025,8,15)
-    },
+  // const [books, setBooks] = useState ([
+  //   {
+  //     id: 1, 
+  //     title: "StarDust",
+  //     format: "Hardcover",
+  //     status: "completed",
+  //     currentPage: 216,
+  //     totalPages: 216,
+  //     progress: 100,
+  //     lastUpdate: new Date(2025,8,15)
+  //   },
 
-    {
-      id: 2, 
-      title: "The monk who sold his ferrari",
-      format: "Hardcover",
-      status: "progress",
-      currentPage: 182,
-      totalPages: 208,
-      progress: 60,
-      lastUpdate: new Date(2025,8,19)
+  //   {
+  //     id: 2, 
+  //     title: "The monk who sold his ferrari",
+  //     format: "Hardcover",
+  //     status: "progress",
+  //     currentPage: 182,
+  //     totalPages: 208,
+  //     progress: 60,
+  //     lastUpdate: new Date(2025,8,19)
 
-    },
+  //   },
 
-    {
-      id: 3, 
-      title: "Invicto",
-      format: "Hardcover",
-      status: "progress",
-      currentPage: 90, 
-      totalPages: 280,
-      progress: 60,
-      lastUpdate: new Date(2025,8,19)
+  //   {
+  //     id: 3, 
+  //     title: "Invicto",
+  //     format: "Hardcover",
+  //     status: "progress",
+  //     currentPage: 90, 
+  //     totalPages: 280,
+  //     progress: 60,
+  //     lastUpdate: new Date(2025,8,19)
 
-    }
+  //   }
 
-    ])
+  //   ])
+
+  const [books, setBoooks] = useState([])
   
   const [searchText, setSearchText] = useState("")
   const [typeFilter, setTypeFilter] = useState("All")
@@ -65,6 +67,18 @@ const BookingReadingTable = () => {
     "progress": "bg-yellow-500 p-2 rounded-full text-white", 
     "wishlist": "bg-red-500 p-2 rounded-full text-white"
   }
+
+  const getBooks = async () => {
+    const {data} = await axiosInstance.get('/book/')
+    console.log('books ', data.books)
+    setBoooks(data.books)
+  }
+
+  useEffect(() => {
+    getBooks()
+  
+  }, [])
+  
 
   
 
@@ -137,7 +151,7 @@ const BookingReadingTable = () => {
             <thead className="text-left font-bold bg-gray-50">
               <tr className="border-t border-gray-200">
                 <th className="p-4"> Title </th>
-                <th className="p-4"> Format </th>
+                <th className="p-4"> Author </th>
                 <th className="p-4"> Status </th>
                 <th className="p-4"> Progress </th>
                 <th className="p-4"> Actions </th>
@@ -146,9 +160,9 @@ const BookingReadingTable = () => {
             <tbody className="">
               {
                 filteredBooks.map( (book) => (
-                 <tr key={book.id} className="border-t border-gray-200">
+                 <tr key={book._id} className="border-t border-gray-200">
                     <td className="p-4"> {book.title} </td> 
-                    <td className="p-4"> {book.format} </td>
+                    <td className="p-4"> {book.author} </td>
                     <td className="p-4">
                       <span className={status[book.status]}>
                         {book.status}
@@ -157,7 +171,7 @@ const BookingReadingTable = () => {
                     <td className="p-4">
                       <div className='w-full bg-gray-200 rounded h-2.5'>
 	                      <div>                                                     
-		                      <div className={`bg-blue-500 h-2.5 rounded`} style={{ width: `${book.progress}%` }}></div>
+		                      <div className={`bg-blue-500 h-2.5 rounded`} style={{ width: `${book.currentPage/book.totalPages * 100}%` }}></div>
                         </div>
                     </div>                                            
                     </td>
@@ -206,9 +220,3 @@ const BookingReadingTable = () => {
 
 export default BookingReadingTable;
 
-      // id: 1, 
-      // title: "StarDust",
-      // format: "Hardcover",
-      // status: "completed",
-      // progress: 100,
-      // lastUpdate: new Date(2025,8,15)
