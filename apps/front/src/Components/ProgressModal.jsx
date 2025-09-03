@@ -1,10 +1,15 @@
 import { FaMinus, FaPlus, FaRegCalendarAlt, FaTimes } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
+import {axiosInstance} from '../util/axios'
 import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
 
-const ProgressModal = ({open, modalStatus, onClose}) => {
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+const ProgressModal = ({open, modalStatus, onClose, onSave}) => {
 
    
     registerLocale("es", es);    
@@ -24,6 +29,22 @@ const ProgressModal = ({open, modalStatus, onClose}) => {
       setCurrenPage(modalStatus.currentPage ?? currentPage)
       setTotalPages(modalStatus.totalPages ?? totalPages)    
     }, [modalStatus])
+
+    const notify = (type, message) => {
+
+    switch(type) {
+      case "success":
+        toast.success(message);   
+        break;
+      case "error": 
+        toast.error(message)
+        break;
+      default: 
+        toast(message)
+    }
+    
+
+  };
     
     
     const handleCloseModal = () => {
@@ -55,7 +76,7 @@ const ProgressModal = ({open, modalStatus, onClose}) => {
     }
 
     const handleChangeProgressStatus = (e) => {
-        console.log('Progreso: ', e.target.value)
+        
 
          if (e.target.value > currentPage) {
           setcurrentPageState(e.target.value)  
@@ -64,10 +85,37 @@ const ProgressModal = ({open, modalStatus, onClose}) => {
 
     }
 
+    const handleSaveProgress = async () => {
+
+        const data = 
+            {   currentPage:  currentPageState,
+                totalPages: totalPages
+            }
+
+            try {
+                const res = await axiosInstance.put(`/book/update-progress/${modalStatus.bookId}`, data)
+                
+                if (res.status === 200) {
+                    notify("success", "¡Progreso actualizado!")
+                    console.log (res.data.updatedBook)
+                    onSave(res.data.updatedBook)
+                    onClose()
+                }
+                
+            } catch (error) {
+                console.log ('error al actualizado el progreso de lectura ', error)
+            }
+
+
+
+        }
+    
+
     if (!open) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50">        
+    <div className="fixed inset-0 flex items-center justify-center bg-black/50">  
+            <ToastContainer />      
             <div className='bg-white p-4 rounded shadow-md max-w-md '>
                 
                 <h2 className='text-xl font-semibold mb-4 text-center'>Progreso de lectura</h2>
@@ -160,6 +208,7 @@ const ProgressModal = ({open, modalStatus, onClose}) => {
                             className={`w-full h-12 rounded-full font-medium text-white bg-brand-500 ${currentPage === currentPageState ? 'opacity-50 cursor-not-allowed' : ''}`}
                             id="saveButton"
                             disabled={currentPage === currentPageState}
+                            onClick={handleSaveProgress}
                             >
                              Salvar 
                         </button>

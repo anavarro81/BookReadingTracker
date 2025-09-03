@@ -74,6 +74,12 @@ const BookingReadingTable = () => {
     setBoooks(data.books)
   }
 
+  const handleUpdateBookInList = (updatedBook) => {  
+
+    setBoooks(prev => prev.map(b => b._id === updatedBook._id ? updatedBook : b))
+
+  }
+
   useEffect(() => {
     getBooks()
   
@@ -87,7 +93,10 @@ const BookingReadingTable = () => {
   }
 
   const handleSetProgressStatus = (book) => {
-    setModalStatus({open: true, currentPage: book.currentPage, totalPages: book.totalPages,  bookId: book.id})
+
+    
+
+    setModalStatus({open: true, currentPage: book.currentPage, totalPages: book.totalPages,  bookId: book._id})
   }
 
   const filteredBooks = books
@@ -109,7 +118,7 @@ const BookingReadingTable = () => {
             open={modalStatus.open}
             modalStatus={modalStatus}  
             onClose={() => setModalStatus(prev => ({...prev, open: false}))}
-            
+            onSave={handleUpdateBookInList}
         />}
             
           

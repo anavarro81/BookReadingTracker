@@ -13,7 +13,7 @@ import {
 
  bookRouter.post('/', newBook)
  bookRouter.delete('/:id', deleteBook)
- bookRouter.put('update-progress/:id', updateProgress)
+ bookRouter.put('/update-progress/:id', updateProgress)
  bookRouter.put('/:id', updatebook)
  bookRouter.get('/', getAllBooks)
 
