@@ -7,43 +7,6 @@ const BookingReadingTable = () => {
 
   
 
-  // const [books, setBooks] = useState ([
-  //   {
-  //     id: 1, 
-  //     title: "StarDust",
-  //     format: "Hardcover",
-  //     status: "completed",
-  //     currentPage: 216,
-  //     totalPages: 216,
-  //     progress: 100,
-  //     lastUpdate: new Date(2025,8,15)
-  //   },
-
-  //   {
-  //     id: 2, 
-  //     title: "The monk who sold his ferrari",
-  //     format: "Hardcover",
-  //     status: "progress",
-  //     currentPage: 182,
-  //     totalPages: 208,
-  //     progress: 60,
-  //     lastUpdate: new Date(2025,8,19)
-
-  //   },
-
-  //   {
-  //     id: 3, 
-  //     title: "Invicto",
-  //     format: "Hardcover",
-  //     status: "progress",
-  //     currentPage: 90, 
-  //     totalPages: 280,
-  //     progress: 60,
-  //     lastUpdate: new Date(2025,8,19)
-
-  //   }
-
-  //   ])
 
   const [books, setBoooks] = useState([])
   
@@ -63,9 +26,9 @@ const BookingReadingTable = () => {
   )
 
   const status = {
-    "completed": "bg-green-500 p-2 rounded-full text-white",
-    "progress": "bg-yellow-500 p-2 rounded-full text-white", 
-    "wishlist": "bg-red-500 p-2 rounded-full text-white"
+    "Completed": "bg-green-500 p-2 rounded-full text-white",
+    "In Progress": "bg-yellow-500 p-2 rounded-full text-white", 
+    "Pending": "bg-red-500 p-2 rounded-full text-white"
   }
 
   const getBooks = async () => {
