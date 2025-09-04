@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FiBook, FiSearch, FiFilter, FiX, FiPlus, FiRefreshCw, FiEdit, FiTrash2 } from "react-icons/fi";
 import { format } from "date-fns";
 import ProgressModal from "../Components/ProgressModal";
+import NewBookForm from "../Components/NewBookForm"
 import {axiosInstance} from '../util/axios'
 const BookingReadingTable = () => {
 
@@ -24,6 +25,10 @@ const BookingReadingTable = () => {
       bookId:null 
     }
   )
+
+  const [newBookModalStatus, setNewBookModalStatus] = useState({
+    open: false
+  })
 
   const status = {
     "Completed": "bg-green-500 p-2 rounded-full text-white",
@@ -49,7 +54,9 @@ const BookingReadingTable = () => {
   }, [])
   
 
-  
+  const handleShowNewBookForm = () => {
+    setNewBookModalStatus(prev => ({ ...prev, open: true }));
+  }
 
   const handleFilterBook = (e) => {
     setSearchText(e.target.value)
@@ -83,6 +90,13 @@ const BookingReadingTable = () => {
             onClose={() => setModalStatus(prev => ({...prev, open: false}))}
             onSave={handleUpdateBookInList}
         />}
+
+        {newBookModalStatus.open &&
+        <NewBookForm
+          onClose={prev => setNewBookModalStatus({...prev, open:false})}
+        />
+
+        }
             
           
 
@@ -113,8 +127,12 @@ const BookingReadingTable = () => {
               <option value="title">Sort by Title</option>
               <option value="progress">Sort by Progress</option>          
             </select>
-            <button className="bg-blue-500 text-white px-5 py-2 rounded-full">
-              <FiPlus/>
+            <button 
+              className="bg-blue-500 text-white px-5 py-2 rounded-full"
+              onClick={handleShowNewBookForm}
+              >
+              <FiPlus               
+              />
             </button>
           </div>
         </div>

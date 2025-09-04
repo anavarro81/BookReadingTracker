@@ -115,7 +115,7 @@ const ProgressModal = ({open, modalStatus, onClose, onSave}) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50">  
-            <ToastContainer />      
+            
             <div className='bg-white p-4 rounded shadow-md max-w-md '>
                 
                 <h2 className='text-xl font-semibold mb-4 text-center'>Progreso de lectura</h2>
