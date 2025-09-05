@@ -42,7 +42,7 @@ const BookSchema = new Schema({
     }, 
     status: {
         type: String, 
-        required: true, 
+        required: false, 
         enum: ["Pending", "In Progress", "Completed"],
         default: "Pending"
     },
@@ -71,7 +71,8 @@ const BookSchema = new Schema({
 
     startReading: {
         type: Date,
-        required: false
+        required: false,
+        default: null
     },
 
     // Comprueba que le llega una fecha: (v instanceof Date), que tiene formato valido: isNaN(v.getTime()
@@ -79,6 +80,7 @@ const BookSchema = new Schema({
     endReading: {
         type: Date,
         required: false,
+        default: null,
         validate: {
             validator: function (this: IBook, v: Date | undefined | null): boolean {
                 if (!v) return true; // si no se proporciona, no hay error

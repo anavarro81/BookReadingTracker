@@ -34,8 +34,7 @@ const bookSchema = Joi.object({
             'any.required': 'El autor del libro es obligatorio'
         }),
     status: 
-        Joi.string()
-        .required()
+        Joi.string()        
         .valid("Pending", "In Progress", "Completed")
         .messages({
            'any.only':  'El estado debe ser "Pending", "In Progress", "Completed"'

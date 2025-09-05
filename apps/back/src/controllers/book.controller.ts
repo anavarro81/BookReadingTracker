@@ -15,7 +15,7 @@ export const newBook = async (req: Request, res: Response, next:NextFunction):Pr
         
         const book = await bookService.newBook(req.body)
 
-        res.status(200).json({book})
+        res.status(201).json({book})
 
         } catch (error) {
         next(error)

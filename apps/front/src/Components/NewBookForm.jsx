@@ -12,23 +12,20 @@ const NewBookForm = ({ onClose, onSubmit }) => {
 
   const [errors, setErrors] = useState({})
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     
     e.preventDefault()
 
     setErrors({})
 
     if(newBook.title.trim().length === 0) {
-      console.log('El titulo no puede estar vacio')    
       setErrors(prev => ({...prev, title: 'El titulo no puede estar vacio'}))
     } else if(newBook.title.length < 3) {       
-      console.log('El titulo tiene que tener al menes tres caracteres')
       setErrors(prev => ({...prev, title: 'El titulo tiene que tener al menes tres caracteres'}))
     }  
      
 
     if(newBook.author.length < 3) {
-      console.log('El autor tiene que tener al menos tres caracteres')     
       setErrors(prev => ({...prev, author: 'El titulo tiene que tener al menes tres caracteres'}))
 
     }  else if (newBook.author.trim().length === 0) {    
@@ -40,23 +37,28 @@ const NewBookForm = ({ onClose, onSubmit }) => {
       
     }    
 
+    console.log('errors ', errors)
 
-    if (!errors) {
-      axiosInstance.
+
+    if (Object.keys(errors).length === 0) {     
+
+      try {        
+        const res = await axiosInstance.post('/book/', newBook)
+        if (res.status === 201) {
+          console.log('Libro dado de alta correctamente')
+        }
+      } catch (error) {
+        console.log('Error en el alta del libro: ', error) 
+      }        
+
     }
 
 
   }
 
-  const handleChangeData = (e) => {
-  
+  const handleChangeData = (e) => {  
     const {name, value} = e.target
-
-    console.log('name ', name)
-    console.log('value ', value)
     setNewBook(prev => ({...prev, [name]: name === 'totalPages' ? parseInt(value, 10) : value}))
-   
-
   
   }
 
