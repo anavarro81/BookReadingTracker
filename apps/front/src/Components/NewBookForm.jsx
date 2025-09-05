@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { axiosInstance } from "../util/axios"
 
 const NewBookForm = ({ onClose, onSubmit }) => {
 
@@ -9,43 +10,39 @@ const NewBookForm = ({ onClose, onSubmit }) => {
     totalPages: 0
   })
 
-  const [error, setErrors] = useState([])
+  const [errors, setErrors] = useState({})
 
   const handleSubmit = (e) => {
     
     e.preventDefault()
 
-    if(newBook.title.length < 3) {
-      console.log('El titulo tiene que tener al menes tres caracteres')
-      setErrors(prev => [...prev, {field: "title", error: "El titulo tiene que tener al menes tres caracteres"}])
-    }  
+    setErrors({})
 
     if(newBook.title.trim().length === 0) {
-      console.log('El titulo no puede estar vacio')
-      setErrors(prev => [...prev, {field: "title", error: "El titulo no puede estar vacio"}])
+      console.log('El titulo no puede estar vacio')    
+      setErrors(prev => ({...prev, title: 'El titulo no puede estar vacio'}))
+    } else if(newBook.title.length < 3) {       
+      console.log('El titulo tiene que tener al menes tres caracteres')
+      setErrors(prev => ({...prev, title: 'El titulo tiene que tener al menes tres caracteres'}))
     }  
+     
 
     if(newBook.author.length < 3) {
-      console.log('El autor tiene que tener al menes tres caracteres')
-      setErrors(prev => [...prev, {field: "author", error: "El autor tiene que tener al menes tres caracteres"}])
-    }  
+      console.log('El autor tiene que tener al menos tres caracteres')     
+      setErrors(prev => ({...prev, author: 'El titulo tiene que tener al menes tres caracteres'}))
 
-    if (newBook.author.trim().length === 0) {
-      setErrors(prev => [...prev, {field: "author", error: "El autor no puede estar vacio"}])
-    }
+    }  else if (newBook.author.trim().length === 0) {    
+      setErrors(prev => ({...prev, author: 'El autor no puede estar vacio'}))
+    }    
 
-
-
-    if (!newBook.totalPages <= 0) {
-      setErrors(prev => [...prev, {field: "totalPages", error: "El numero total de páginas tiene que ser mayor que cero"}])
-    }
+    if (newBook.totalPages <= 0) {
+      setErrors(prev => ({...prev, totalPages: 'El numero total de páginas tiene que ser mayor que cero'}))
+      
+    }    
 
 
-
-
-
-    if (!error) {
-
+    if (!errors) {
+      axiosInstance.
     }
 
 
@@ -66,7 +63,7 @@ const NewBookForm = ({ onClose, onSubmit }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50">
-    <div className="max-w-md mx-auto bg-white p-6 rounded shadow">
+    <div className="max-w-lg mx-auto bg-white p-6 rounded shadow">
       <h2 className="text-xl font-semibold mb-4 text-center">Agregar libro</h2>
 
       <form className="space-y-4">
@@ -80,6 +77,7 @@ const NewBookForm = ({ onClose, onSubmit }) => {
             className="w-full border border-gray-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-200"
             onChange={handleChangeData}
           />
+           { errors.title && <span className="text-red-500 text-sm"> {errors["title"]} </span> } 
         </div>
 
         <div>
@@ -92,6 +90,8 @@ const NewBookForm = ({ onClose, onSubmit }) => {
             onChange={handleChangeData}
             className="w-full border border-gray-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-200"
           />
+           { errors.author && <span className="text-red-500 text-sm"> {errors["author"]} </span> } 
+          
         </div>
 
         <div>
@@ -105,6 +105,7 @@ const NewBookForm = ({ onClose, onSubmit }) => {
             onChange={handleChangeData}
             className="w-full border border-gray-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-200"
           />
+          { errors.totalPages && <span className="text-red-500 text-sm"> {errors["totalPages"]} </span> }
         </div>
 
         <div className="flex justify-end gap-3 pt-2">
