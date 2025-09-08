@@ -3,6 +3,7 @@ import { FiBook, FiSearch, FiFilter, FiX, FiPlus, FiRefreshCw, FiEdit, FiTrash2 
 import { format } from "date-fns";
 import ProgressModal from "../Components/ProgressModal";
 import NewBookForm from "../Components/NewBookForm"
+import DeleteBookModal from "../Components/DeleteBookModal"
 import EditBookForm from "../Components/EditBookForm"
 import {axiosInstance} from '../util/axios'
 const BookingReadingTable = () => {
@@ -17,6 +18,7 @@ const BookingReadingTable = () => {
   const [sortBy, setSortedBy] = useState("title")
   const [showSetProgressModal, setshowSetProgressModal] = useState(false)
   const [editedBook, setEditedBook] = useState({})
+  const [bookToDelete, setBookToDelete] = useState({})
   
 
   const [modalStatus, setModalStatus] = useState(
@@ -34,6 +36,10 @@ const BookingReadingTable = () => {
 
   const [editBookFormStatus, setEditBookFormStatus] = useState({
     open: false
+  })
+
+  const [deleteModalStatus, setDeleteModalStatus] = useState({
+    open:false 
   })
 
   const status = {
@@ -96,6 +102,34 @@ const BookingReadingTable = () => {
     setModalStatus({open: true, currentPage: book.currentPage, totalPages: book.totalPages,  bookId: book._id})
   }
 
+  const handleDeleteBook = async (id, title) => {
+    console.log('deleteBook id ', id)
+    console.log('deleteBook title ', title)     
+    
+    setBookToDelete({id: id, bookTitle: title})
+    setDeleteModalStatus(prev => ({...prev, open:true}))
+  }
+
+  const deleteBookById = async (id) => {
+
+    console.log('deleteBookById id ', id)
+
+    try {
+      const res = await axiosInstance.delete(`/book/${id}`)
+      
+      if (res.status === 200) {
+        console.log ('Libro borrado con exito')
+        setBoooks(books.filter(book => book._id !== id))
+        setDeleteModalStatus(prev => ({...prev, open:false}))
+      }
+
+    } catch (error) {
+      console.error ('Error al borrar el libro ', error)
+    }
+
+
+  }
+
   const filteredBooks = books
   .filter(book => book.title.toLowerCase().includes(searchText.toLowerCase()))
   .filter(book => typeFilter === "All" || book.status == typeFilter)
@@ -132,6 +166,16 @@ const BookingReadingTable = () => {
             onSave={handleUpdateBookInList}
           />
         }
+
+        {deleteModalStatus.open &&
+          <DeleteBookModal
+            onClose={() => setDeleteModalStatus(prev => ({...prev, open: false}))}
+            onConfirm={deleteBookById}
+            bookToDelete={bookToDelete}
+          />
+        }
+
+
             
           
 
@@ -222,7 +266,9 @@ const BookingReadingTable = () => {
 
                         <button
                           className="flex items-center gap-2 px-3 py-2 rounded-full border hover:bg-gray-50 text-red-600"
+                          id="deleteBook"
                           title="Borrar libro"
+                          onClick={() => handleDeleteBook(book._id, book.title)}
                         >
                           <FiTrash2 />
                           
