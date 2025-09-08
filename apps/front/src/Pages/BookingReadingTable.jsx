@@ -201,8 +201,8 @@ const BookingReadingTable = () => {
               onChange={(e) => setTypeFilter(e.target.value)}
             >
               <option value="All">All Books</option>
-              <option value="progress">In Progress</option>
-              <option value="completed">Completed</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
             </select>
             <select 
               name="" 
