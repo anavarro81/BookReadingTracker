@@ -54,10 +54,15 @@ const BookingReadingTable = () => {
 
   }
 
+
+
   const handleEditBook = (book) => {
 
+    console.log('handleEditBook ', book)
+
     setEditedBook({
-     title: book.title,
+      id:    book._id,
+      title: book.title,
      author: book.author,
      status: book.status,
     currentPage: book.currentPage,
@@ -123,7 +128,8 @@ const BookingReadingTable = () => {
         {editBookFormStatus.open &&
           <EditBookForm
             book={editedBook}
-
+            onClose={() => setEditBookFormStatus(prev => ({...prev, open: false}))}
+            onSave={handleUpdateBookInList}
           />
         }
             
