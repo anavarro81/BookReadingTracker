@@ -19,6 +19,8 @@ export function validateAuthor(value) {
       return 'El autor no puede estar vacio'
     }  
 
+    return null
+
 }
 
 export function validateStatus(value) { 
@@ -29,6 +31,8 @@ export function validateStatus(value) {
         return "El estado no es valido"
     }
 
+    return null
+
 
 }
 export function validateCurrentPage(value) { 
@@ -36,6 +40,8 @@ export function validateCurrentPage(value) {
     if (value < 0) {
         return 'La pagina actual tiene que ser mayor que cero'    
     }
+
+    return null
 }
 
 export function validateTotalPages(value) { 
@@ -43,6 +49,8 @@ export function validateTotalPages(value) {
     if (value < 0) {
         return 'Las paginas totales tienen que ser mayor que cero'    
     }
+
+    return null
 
 
 
@@ -62,30 +70,37 @@ export function validateEndReading(value) { }
  */
 export function validateFields(fields) {
     const results = {}
+    let err = ''
 
     for (const [field, value] of Object.entries(fields)) {
         switch (field) {
             case 'title':
-                const err = validateTitle(value)                
+                err = validateTitle(value)                
                 if (err) results.title = err                    
                 break
             case 'author':
-                results.author = validateAuthor(value)
+                err = validateAuthor(value)
+                if (err) results.author = err
                 break
             case 'status':
-                results.status = validateStatus(value)
+                err = validateStatus(value)
+                if (err) results.status = err
                 break
             case 'currentPage':
-                results.currentPage = validateCurrentPage(value)
+                err = validateCurrentPage(value)
+                if (err) results.currentPage = err
                 break
             case 'totalPages':
-                results.totalPages = validateTotalPages(value)
+                err = validateTotalPages(value)
+                if (err) results.totalPages = err                
                 break
             case 'startReading':
-                results.startReading = validateStartReading(value)
+                err = validateStartReading(value)
+                if (err) results.startReading = err
                 break
             case 'endReading':
-                results.endReading = validateEndReading(value)
+                err = validateEndReading(value)
+                if (err) results.endReading = err
                 break
             default:
                 // unknown field: ignore

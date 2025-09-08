@@ -45,12 +45,11 @@ const NewBookForm = ({ onClose, onSave }) => {
         const res = await axiosInstance.post('/book/', newBook)
         if (res.status === 201) {
           console.log('Libro dado de alta correctamente')
-          console.log('new book ', res.data.book)
           onSave(res.data.book)
           onClose()
         }
       } catch (error) {
-        console.log('Error en el alta del libro: ', error) 
+        console.error('Error en el alta del libro: ', error) 
       }        
 
     }

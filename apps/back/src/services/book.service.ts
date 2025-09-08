@@ -60,6 +60,7 @@ export const updateBook = async(id: string, data: Partial<IBook>): Promise<IBook
         console.log('updatedBook  ', updatedBook )
         return updatedBook 
     } catch (error) {
+        console.log('doy errorrrrr')
         throw error
     }
 

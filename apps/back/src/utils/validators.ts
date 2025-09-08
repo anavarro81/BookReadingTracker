@@ -42,7 +42,7 @@ const bookSchema = Joi.object({
     currentPage: 
         Joi.number()
         .min(0)
-        .max(Joi.ref('totalPages'))
+        // .max(Joi.ref('totalPages'))
         .messages({
             'number.min': 'La página actual tiene que ser al menos 0',
             'number.max': 'La página actual no puede ser mayor que el total de páginas'
@@ -109,7 +109,7 @@ const bookSchemaUpdate = Joi.object({
     currentPage: 
         Joi.number()
         .min(0)
-        .max(Joi.ref('totalPages'))
+        // .max(Joi.ref('totalPages'))
         .messages({
             'number.min': 'La página actual tiene que ser al menos 0',
             'number.max': 'La página actual no puede ser mayor que el total de páginas'
@@ -144,7 +144,10 @@ const bookSchemaUpdate = Joi.object({
 
 export const validateNewBook = (payload: Partial<IBook>): ValidateResult => {
 
-    const {error} = bookSchema.validate(payload, { abortEarly: false })
+    console.log('type payload ', payload.currentPage) 
+    
+    
+    const {error} = bookSchema.validate(payload, { abortEarly: false, convert: true })
 
     if (!error) {
         return {valid: true, errors: []}
@@ -165,7 +168,9 @@ export const validateNewBook = (payload: Partial<IBook>): ValidateResult => {
 
 export const validateUpdateBook = (payload: Partial<IBook>): ValidateResult => { 
 
-    const {error} = bookSchemaUpdate.validate(payload, { abortEarly: false })
+    console.log('type currentPage ', typeof payload.currentPage) 
+
+    const {error} = bookSchemaUpdate.validate(payload, { abortEarly: false, convert: true })
 
         if (!error) {
         return {valid: true, errors: []}

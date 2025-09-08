@@ -66,8 +66,12 @@ export  const updatebook = async (req: Request, res: Response,  next:NextFunctio
 
     const result = validateUpdateBook(data)
 
+    console.log ('errores >>> ', result )
+
     if (!result.valid) {
+        console.error()
         res.status(403).json({error: result.errors})
+        return 
     }
 
    
@@ -77,8 +81,10 @@ export  const updatebook = async (req: Request, res: Response,  next:NextFunctio
         const updatedBook = await bookService.updateBook(id, data)        
 
         res.status(200).json({updatedBook})
+        
 
     } catch (error) {
+       console.log ('error en el update ', error)
        next(error) 
     }
 

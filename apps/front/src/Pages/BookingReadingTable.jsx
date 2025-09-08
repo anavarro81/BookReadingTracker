@@ -134,8 +134,6 @@ const BookingReadingTable = () => {
 
   }
 
-  console.log ('books ', books)
-  console.log ('tipo ', typeof books)
 
   const filteredBooks = books
   .filter(book => book.title.toLowerCase().includes(searchText.toLowerCase()))
