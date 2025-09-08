@@ -50,7 +50,7 @@ const BookingReadingTable = () => {
 
   const getBooks = async () => {
     const {data} = await axiosInstance.get('/book/')
-    console.log('books ', data.books)
+    
     setBoooks(data.books)
   }
 
@@ -64,7 +64,7 @@ const BookingReadingTable = () => {
 
   const handleEditBook = (book) => {
 
-    console.log('handleEditBook ', book)
+    
 
     setEditedBook({
       id:    book._id,
@@ -103,8 +103,6 @@ const BookingReadingTable = () => {
   }
 
   const handleDeleteBook = async (id, title) => {
-    console.log('deleteBook id ', id)
-    console.log('deleteBook title ', title)     
     
     setBookToDelete({id: id, bookTitle: title})
     setDeleteModalStatus(prev => ({...prev, open:true}))
@@ -112,13 +110,12 @@ const BookingReadingTable = () => {
 
   const deleteBookById = async (id) => {
 
-    console.log('deleteBookById id ', id)
+    
 
     try {
       const res = await axiosInstance.delete(`/book/${id}`)
       
       if (res.status === 200) {
-        console.log ('Libro borrado con exito')
         setBoooks(books.filter(book => book._id !== id))
         setDeleteModalStatus(prev => ({...prev, open:false}))
       }
@@ -237,10 +234,14 @@ const BookingReadingTable = () => {
                         {book.status}
                       </span>
                     </td>
-                    <td className="p-4">
+                    <td className="p-4 text-center text-sm">
+                      <span className=""> {Math.trunc(book.currentPage/book.totalPages * 100)}% </span>
                       <div className='w-full bg-gray-200 rounded h-2.5'>
 	                      <div>                                                     
-		                      <div className={`bg-blue-500 h-2.5 rounded`} style={{ width: `${book.currentPage/book.totalPages * 100}%` }}></div>
+		                      
+                          <div 
+                            id="progressbar"
+                            className={`bg-blue-500 h-2.5 rounded`} style={{ width: `${book.currentPage/book.totalPages * 100}%` }}></div>
                         </div>
                     </div>                                            
                     </td>
