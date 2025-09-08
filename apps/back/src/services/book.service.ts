@@ -30,6 +30,14 @@ export const updateProgress = async (id: string, totalPages: number, currentPage
     
         let data: Partial<IBook> = { currentPage };
 
+        const book = await BookModel.findById(id)
+
+        if (book){
+         
+            if (book.currentPage === 0){
+             data = {...data, status: "In Progress"}
+            }    
+        }
 
 
         if (currentPage == totalPages) {

@@ -3,6 +3,7 @@ import { FiBook, FiSearch, FiFilter, FiX, FiPlus, FiRefreshCw, FiEdit, FiTrash2 
 import { format } from "date-fns";
 import ProgressModal from "../Components/ProgressModal";
 import NewBookForm from "../Components/NewBookForm"
+import EditBookForm from "../Components/EditBookForm"
 import {axiosInstance} from '../util/axios'
 const BookingReadingTable = () => {
 
@@ -15,6 +16,7 @@ const BookingReadingTable = () => {
   const [typeFilter, setTypeFilter] = useState("All")
   const [sortBy, setSortedBy] = useState("title")
   const [showSetProgressModal, setshowSetProgressModal] = useState(false)
+  const [editedBook, setEditedBook] = useState({})
   
 
   const [modalStatus, setModalStatus] = useState(
@@ -27,6 +29,10 @@ const BookingReadingTable = () => {
   )
 
   const [newBookModalStatus, setNewBookModalStatus] = useState({
+    open: false
+  })
+
+  const [editBookFormStatus, setEditBookFormStatus] = useState({
     open: false
   })
 
@@ -45,6 +51,22 @@ const BookingReadingTable = () => {
   const handleUpdateBookInList = (updatedBook) => {  
 
     setBoooks(prev => prev.map(b => b._id === updatedBook._id ? updatedBook : b))
+
+  }
+
+  const handleEditBook = (book) => {
+
+    setEditedBook({
+     title: book.title,
+     author: book.author,
+     status: book.status,
+    currentPage: book.currentPage,
+    totalPages: book.totalPages,
+    startReading: book.startReading,
+    endReading: book.startReading,
+  })
+
+    setEditBookFormStatus(prev => ({...prev, open: true}))
 
   }
 
@@ -96,6 +118,13 @@ const BookingReadingTable = () => {
           onClose={prev => setNewBookModalStatus({...prev, open:false})}
         />
 
+        }
+
+        {editBookFormStatus.open &&
+          <EditBookForm
+            book={editedBook}
+
+          />
         }
             
           
@@ -179,7 +208,7 @@ const BookingReadingTable = () => {
                         <button
                           className="flex items-center gap-2 px-3 py-2 rounded-full border hover:bg-gray-50"
                           title="Editar libro"
-                          
+                          onClick={() => handleEditBook(book)}
                         >
                           <FiEdit />
                           

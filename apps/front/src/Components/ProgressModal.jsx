@@ -87,6 +87,9 @@ const ProgressModal = ({open, modalStatus, onClose, onSave}) => {
 
     const handleSaveProgress = async () => {
 
+        console.log('pagina actual previa ', modalStatus.currentPage)
+        console.log('pagina actual despues', currentPageState)
+
         const data = 
             {   currentPage:  currentPageState,
                 totalPages: totalPages
