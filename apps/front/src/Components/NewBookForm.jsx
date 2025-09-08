@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { axiosInstance } from "../util/axios"
 
-const NewBookForm = ({ onClose, onSubmit }) => {
+const NewBookForm = ({ onClose, onSave }) => {
 
 
   const [newBook, setNewBook] = useState({
@@ -37,7 +37,6 @@ const NewBookForm = ({ onClose, onSubmit }) => {
       
     }    
 
-    console.log('errors ', errors)
 
 
     if (Object.keys(errors).length === 0) {     
@@ -46,6 +45,9 @@ const NewBookForm = ({ onClose, onSubmit }) => {
         const res = await axiosInstance.post('/book/', newBook)
         if (res.status === 201) {
           console.log('Libro dado de alta correctamente')
+          console.log('new book ', res.data.book)
+          onSave(res.data.book)
+          onClose()
         }
       } catch (error) {
         console.log('Error en el alta del libro: ', error) 

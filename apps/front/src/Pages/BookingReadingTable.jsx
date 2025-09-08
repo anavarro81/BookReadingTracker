@@ -48,6 +48,13 @@ const BookingReadingTable = () => {
     "Pending": "bg-red-500 p-2 rounded-full text-white"
   }
 
+  const saveNewBook = (newbook) => {
+
+    
+    setBoooks(prev => [...prev, newbook])
+
+  }
+
   const getBooks = async () => {
     const {data} = await axiosInstance.get('/book/')
     
@@ -127,6 +134,9 @@ const BookingReadingTable = () => {
 
   }
 
+  console.log ('books ', books)
+  console.log ('tipo ', typeof books)
+
   const filteredBooks = books
   .filter(book => book.title.toLowerCase().includes(searchText.toLowerCase()))
   .filter(book => typeFilter === "All" || book.status == typeFilter)
@@ -152,6 +162,7 @@ const BookingReadingTable = () => {
         {newBookModalStatus.open &&
         <NewBookForm
           onClose={prev => setNewBookModalStatus({...prev, open:false})}
+          onSave={saveNewBook}
         />
 
         }
