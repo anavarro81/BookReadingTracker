@@ -9,7 +9,7 @@ app.use(cors())
 app.use(express.json())
 app.use(helmet())
 
-
+console.log('Estoy en mi app')
 
 app.get('/health', (req, res) => {
     res.status(200).json({status: "OK"})

@@ -3,16 +3,22 @@ import env from './config/env'
 import connectDB from './config/bd'
 
 
+async function main () {
+
+    try {
+        await connectDB()
+        app.listen(env.PORT, () => {
+        console.log(`Server running on PORT: ${env.PORT}`)
+    })
 
 
-try {
-    connectDB()
-} catch (error) {    
-    process.exit(1)
+    } catch (error) {
+        console.error('Failed to start server:', error)
+        process.exit(1)   
+    }
+
 }
 
 
-app.listen(env.PORT, () => {
-    console.log(`Server running on PORT: ${env.PORT}`)
-})
+main()
 
