@@ -203,6 +203,7 @@ const BookingReadingTable = () => {
               <option value="All">All Books</option>
               <option value="In Progress">In Progress</option>
               <option value="Completed">Completed</option>
+              <option value="Pending">Pending</option>
             </select>
             <select 
               name="" 
