@@ -11,7 +11,7 @@ app.use(express.json())
 app.use(helmet())
 
 console.log('Conectar a la base de datos')
-connectDB()
+// connectDB()
 
 app.get('/health', (req, res) => {
     res.status(200).json({status: "OK"})
