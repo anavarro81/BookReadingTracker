@@ -2,7 +2,7 @@ import { FaMinus, FaPlus, FaRegCalendarAlt, FaTimes } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import {axiosInstance} from '../util/axios'
-import es from "date-fns/locale/es";
+import { es } from 'date-fns/locale';
 import "react-datepicker/dist/react-datepicker.css";
 
 import { toast, ToastContainer } from 'react-toastify';
